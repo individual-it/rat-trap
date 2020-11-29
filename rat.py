@@ -6,7 +6,12 @@ import logging
 
 from builtins import range
 
-logging.basicConfig(filename='/var/log/rat.log', filemode='w', format='%(asctime)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO,
+    filename='/var/log/rat.log',
+    filemode='w',
+    format='%(asctime)s - %(message)s'
+)
 
 GPIO.setmode(GPIO.BOARD)
 armPin = 19
