@@ -1,4 +1,5 @@
 import sys
+import os
 import RPi.GPIO as GPIO
 import time
 import evdev
@@ -9,7 +10,7 @@ from notify_run import Notify
 from configparser import ConfigParser
 
 cfg = ConfigParser()
-cfg.read('config.ini')
+cfg.read(os.path.dirname(os.path.abspath(__file__)) + '/config.ini')
 
 try:
     notifyEndpoint = cfg.get('rat', 'notify_endpoint')
