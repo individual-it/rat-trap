@@ -5,6 +5,20 @@ import evdev
 import logging
 
 from builtins import range
+from notify_run import Notify
+from configparser import ConfigParser
+
+cfg = ConfigParser()
+cfg.read('config.ini')
+
+try:
+    notifyEndpoint = cfg.get('rat', 'notify_endpoint')
+    notify = Notify(endpoint=notifyEndpoint)
+except:
+    notify = None
+
+if notify is not None:
+    notify.send('starting rat trap')
 
 logging.basicConfig(
     level=logging.INFO,
@@ -49,7 +63,10 @@ try:
                 break
 
         if DEVICE is None:
-            sys.exit('could not find mouse')
+            message = 'could not find mouse'
+            if notify is not None:
+                notify.send(message)
+            sys.exit(message)
 
         while GPIO.input(armPin) == 1:
             time.sleep(0.01)
@@ -62,7 +79,10 @@ try:
 
         for event in DEVICE.read_loop():
             DEVICE.close()
-            logging.info("CATCH IT")
+            message = 'trap closed'
+            logging.info(message)
+            if notify is not None:
+                notify.send(message)
             move("pull", 50)
             move("push", 80)
             break
