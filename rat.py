@@ -79,14 +79,15 @@ try:
         move("push", 70)
 
         for event in DEVICE.read_loop():
-            DEVICE.close()
-            message = 'trap closed'
-            logging.info(message)
-            if notify is not None:
-                notify.send(message)
-            move("pull", 70)
-            move("push", 80)
-            break
+            if event.type in [evdev.ecodes.EV_REL, evdev.ecodes.EV_KEY]:
+                DEVICE.close()
+                message = 'trap closed'
+                logging.info(message)
+                if notify is not None:
+                    notify.send(message)
+                move("pull", 70)
+                move("push", 80)
+                break
 finally:
     GPIO.cleanup(directionPin)
     GPIO.cleanup(stepPin)
