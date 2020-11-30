@@ -76,7 +76,7 @@ try:
         logging.info("trap is armed")
         move("pull", 80)
         time.sleep(10)
-        move("push", 50)
+        move("push", 70)
 
         for event in DEVICE.read_loop():
             DEVICE.close()
@@ -84,7 +84,7 @@ try:
             logging.info(message)
             if notify is not None:
                 notify.send(message)
-            move("pull", 50)
+            move("pull", 70)
             move("push", 80)
             break
 finally:
