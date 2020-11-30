@@ -58,7 +58,7 @@ try:
         DEVICE = None
         DEVICES = [evdev.InputDevice(fn) for fn in evdev.list_devices()]
         for d in DEVICES:
-            if 'PixArt USB Optical Mouse' in d.name:
+            if 'Mouse' in d.name:
                 DEVICE = d
                 logging.info('Found (computer) mouse %s at %s...' % (d.name, d.path))
                 break
